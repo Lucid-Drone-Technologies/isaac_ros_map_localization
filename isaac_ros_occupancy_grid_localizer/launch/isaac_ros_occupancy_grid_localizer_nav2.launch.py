@@ -30,6 +30,7 @@ from launch_ros.descriptions import ComposableNode
 
 def generate_launch_description():
 
+    # change map_file and (topics and frames) in lavobot_nav2
     map_file_arg = DeclareLaunchArgument(
         'map_file', default_value=os.path.join(
             get_package_share_directory(
@@ -38,10 +39,10 @@ def generate_launch_description():
     params_file_arg = DeclareLaunchArgument(
         'params_file', default_value=os.path.join(
             get_package_share_directory(
-                'isaac_ros_occupancy_grid_localizer'), 'params', 'carter_nav2.yaml'),
+                'isaac_ros_occupancy_grid_localizer'), 'params', 'lavobot_nav2.yaml'),
         description='Full path to param file to load')
     use_sim_time_arg = DeclareLaunchArgument(
-        'use_sim_time', default_value='True',
+        'use_sim_time', default_value='False',
         description='Use simulation (Omniverse Isaac Sim) clock if true')
     run_rviz_arg = DeclareLaunchArgument(
         'run_rviz', default_value='True',
@@ -104,13 +105,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    baselink_basefootprint_publisher = Node(
-        package='tf2_ros', executable='static_transform_publisher',
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
-        output='screen',
-        arguments=['0.0', '0.0', '0', '0.0', '0.0', '0.0', 'base_link', 'base_footprint'],
-        condition=IfCondition(LaunchConfiguration('run_nav2')))
-
     return LaunchDescription([
         map_file_arg,
         params_file_arg,
@@ -119,6 +113,5 @@ def generate_launch_description():
         run_nav2_arg,
         rviz_launch,
         nav2_launch,
-        baselink_basefootprint_publisher,
         occupancy_grid_localizer_container
     ])

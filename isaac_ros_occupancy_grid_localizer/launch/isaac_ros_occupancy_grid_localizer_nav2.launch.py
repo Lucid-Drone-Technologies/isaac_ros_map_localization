@@ -34,7 +34,7 @@ def generate_launch_description():
     map_file_arg = DeclareLaunchArgument(
         'map_file', default_value=os.path.join(
             get_package_share_directory(
-                'isaac_ros_occupancy_grid_localizer'), 'maps', 'isaac_sim.yaml'),
+                'isaac_ros_occupancy_grid_localizer'), 'maps/office_maps2', 'map.yaml'),
         description='Full path to map file to load')
     params_file_arg = DeclareLaunchArgument(
         'params_file', default_value=os.path.join(
@@ -45,14 +45,14 @@ def generate_launch_description():
         'use_sim_time', default_value='False',
         description='Use simulation (Omniverse Isaac Sim) clock if true')
     run_rviz_arg = DeclareLaunchArgument(
-        'run_rviz', default_value='True',
+        'run_rviz', default_value='False',
         description='Whether to start RVIZ')
     run_nav2_arg = DeclareLaunchArgument(
         'run_nav2', default_value='True',
         description='Whether to run nav2')
 
     nav2_bringup_launch_dir = os.path.join(
-        get_package_share_directory('nav2_bringup'), 'launch')
+        get_package_share_directory('isaac_ros_occupancy_grid_localizer'), 'launch')
     rviz_config_dir = os.path.join(get_package_share_directory(
         'isaac_ros_occupancy_grid_localizer'), 'rviz',
         'isaac_sim_nav2.rviz')
